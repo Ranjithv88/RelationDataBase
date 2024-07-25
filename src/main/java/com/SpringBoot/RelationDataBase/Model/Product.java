@@ -3,7 +3,7 @@ package com.SpringBoot.RelationDataBase.Model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -18,6 +18,8 @@ public class Product {
     private LocalDate CreatedOn;
     private String image;
 
+    @ManyToMany(mappedBy = "products")
+    private Set<CartIterm> cartIterms ;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
@@ -86,5 +88,14 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public Set<CartIterm> getCartIterms() {
+        return cartIterms;
+    }
+
+    public void setCartIterms(Set<CartIterm> cartIterms) {
+        this.cartIterms = cartIterms;
+    }
+
 }
 

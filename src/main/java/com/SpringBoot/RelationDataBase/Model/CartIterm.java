@@ -1,8 +1,10 @@
 package com.SpringBoot.RelationDataBase.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class CartIterm {
@@ -10,6 +12,16 @@ public class CartIterm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItermId;
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_cartIterm",
+            joinColumns = @JoinColumn(name = "cartItemId"),
+            inverseJoinColumns = @JoinColumn(name = "productId")
+    )
+    @JsonIgnoreProperties("CartItem")
+    private Set<Product> products ;
+
     @ManyToOne
     @JoinColumn(name = "cartId")
     private Cart cart;
@@ -46,5 +58,14 @@ public class CartIterm {
     public void setCreatedOn(LocalDate createdOn) {
         CreatedOn = createdOn;
     }
+
+    public Set<Product> getProduct() {
+        return products;
+    }
+
+    public void setProduct(Set<Product> product) {
+        this.products = product;
+    }
+
 }
 
